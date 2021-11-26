@@ -10,25 +10,30 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     {
       nixosConfigurations = {
-        openstack-basic = nixpkgs.lib.nixosSystem {
+        aiur = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            (import ./hardware/aiur.nix)
             (import ./caches.nix)
             (import ./modules/nixUnstable.nix)
-            (import ./modules/openstack.nix)
             (import ./modules/packages/essentials.nix)
             (import ./users/lc)
-            (import ./users/marc)
+            (import ./modules/desktop.nix)
             {
-              networking.hostName = "openstack-basic";
-              nix.trustedUsers = [ "marc" "lc" ];
+              boot.loader.systemd-boot.enable = true;
+              boot.loader.efi.canTouchEfiVariables = true;
+              networking.hostName = "aiur";
+              networking.useDHCP = false;
+              networking.interfaces.enp5s0.useDHCP = true;
+              networking.interfaces.wlp3s0.useDHCP = true;
+              networking.interfaces.wlp4s0.useDHCP = true;
+              nix.trustedUsers = [ "lc" ];
             }
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.lc = import ./users/lc/home.nix;
-              home-manager.users.marc = import ./users/marc/home.nix;
             }
           ];
           specialArgs = { inherit inputs; };

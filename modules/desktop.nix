@@ -21,7 +21,18 @@
     xkbOptions = "eurosign:e, compose:ralt, grp:alt_space_toggle";
   };
 
-  environment.systemPackages = with pkgs; [ xmobar ];
+  environment.systemPackages = with pkgs; [
+    alacritty
+    bitwig-studio
+    brave
+    exodus
+    firefox
+    ledger-live-desktop
+    krita
+    obs-studio
+    thunderbird
+    xmobar
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
