@@ -10,7 +10,7 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     {
       nixosConfigurations = {
-        openstack = nixpkgs.lib.nixosSystem {
+        openstack-basic = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             (import ./modules/nixUnstable.nix)
@@ -19,6 +19,7 @@
             (import ./users/lc)
             (import ./users/marc)
             {
+              networking.hostName = "openstack-basic";
               nix.trustedUsers = [ "marc" "lc" ];
             }
             home-manager.nixosModules.home-manager
