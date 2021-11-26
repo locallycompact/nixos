@@ -13,6 +13,7 @@
         openstack-basic = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
+            (import ./caches.nix)
             (import ./modules/nixUnstable.nix)
             (import ./modules/openstack.nix)
             (import ./modules/packages/essentials.nix)
