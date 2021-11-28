@@ -6,6 +6,7 @@
     cabal-install
     curl
     dhall
+    ipfs
     haskell-language-server
     ghc
     git

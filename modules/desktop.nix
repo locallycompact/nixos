@@ -29,6 +29,7 @@
     firefox
     ledger-live-desktop
     krita
+    quasselClient
     obs-studio
     thunderbird
     xmobar
