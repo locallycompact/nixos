@@ -6,4 +6,7 @@
    home.file.".xresources".source = ./.xresources;
    home.file."Wallpapers".source = ./Wallpapers;
 
+   home.packages = with pkgs; [
+     feh
+   ];
 }

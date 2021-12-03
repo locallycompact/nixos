@@ -2,6 +2,7 @@
 
   imports = [
     ./modules/desktop.nix
+    ./modules/fish.nix
     ./modules/git.nix
     ./modules/neovim.nix
    ];

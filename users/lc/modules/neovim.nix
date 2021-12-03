@@ -1,5 +1,11 @@
 { config, lib, pkgs, ... }: {
 
+  home.packages = with pkgs; [
+    haskell-language-server
+    ormolu
+    stylish-haskell
+  ];
+
   programs.neovim = {
     enable = true;
     viAlias = true;

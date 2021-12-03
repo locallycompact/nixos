@@ -1,12 +1,15 @@
 { config, lib, pkgs, ... }:
-
 {
   services.xserver = {
     enable = true;
     exportConfiguration = true;
     desktopManager.gnome.enable = true;
     digimend.enable = true;
-    displayManager.gdm.enable = true;
+    displayManager.gdm = {
+      enable = true;
+      wayland = false;
+      nvidiaWayland = false;
+    };
     layout = "us,fr,de";
     videoDrivers = [ "nvidia" ];
     wacom.enable = true;
@@ -31,26 +34,36 @@
     krita
     quasselClient
     obs-studio
+    steam
     thunderbird
+    tor-browser-bundle-bin
+    wine
     xmobar
+    xournal
   ];
 
   nixpkgs.config.allowUnfree = true;
 
-  hardware.opengl = { enable = true; driSupport32Bit = true; };
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
+  };
+
+  hardware.pulseaudio.enable = false;
 
   services.flatpak.enable = true;
 
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
     pulse.enable = true;
     jack.enable = true;
   };
 
-  hardware.pulseaudio.enable = false;
   sound.enable = false;
 
 }

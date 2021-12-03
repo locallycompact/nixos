@@ -15,6 +15,7 @@
     stack
     vim
     wget
+    yarn
   ];
 
 }

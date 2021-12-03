@@ -4,8 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     haskellNix.url = "github:input-output-hk/haskell.nix";
+    haskellNix.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     emanote.url = "github:srid/emanote";
+    emanote.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -14,12 +16,13 @@
         aiur = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            (import ./hardware/aiur.nix)
             (import ./caches.nix)
+            (import ./hardware/aiur.nix)
             (import ./modules/nixUnstable.nix)
             (import ./modules/packages/essentials.nix)
-            (import ./users/lc)
+            (import ./modules/ledger.nix)
             (import ./modules/emanote.nix)
+            (import ./users/lc)
             {
                environment.systemPackages = [inputs.emanote.outputs.defaultPackage.x86_64-linux];
             }
