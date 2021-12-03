@@ -13,6 +13,29 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
     {
       nixosConfigurations = {
+        mobius = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            (import ./caches.nix)
+            (import ./modules/nixUnstable.nix)
+            (import ./modules/openstack.nix)
+            (import ./modules/packages/essentials.nix)
+            (import ./users/lc)
+            (import ./users/marc)
+            {
+              networking.hostName = "mobius";
+              nix.trustedUsers = [ "marc" "lc" ];
+            }
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.lc = import ./users/lc/home.nix;
+              home-manager.users.marc = import ./users/marc/home.nix;
+            }
+          ];
+          specialArgs = { inherit inputs; };
+        };
         aiur = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
@@ -24,7 +47,7 @@
             (import ./modules/emanote.nix)
             (import ./users/lc)
             {
-               environment.systemPackages = [inputs.emanote.outputs.defaultPackage.x86_64-linux];
+              environment.systemPackages = [ inputs.emanote.outputs.defaultPackage.x86_64-linux ];
             }
             (import ./modules/desktop.nix)
             {
